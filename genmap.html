@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=your_baidu_ak"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+</head>
+<body style="padding-left: 20px">
+    <h3>自定义地图</h3>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label>地图中心点（比如：上海市） *</label>
+            <input type="text" id="center-point" />
+        </div>
+        <div class="control-group">
+            <label>行政区域列表，用英文分号分隔（比如：上海市;浙江省;江苏省） *</label>
+            <input type="text" id="areas" />
+        </div>
+        <div class="control-group">
+            <label>初始倍率</label>
+            <input type="text" id="level" placeholder="default: 11"/>
+        </div>
+        <div class="control-group">
+            <input type="button" id="search" value="生成地图并预览"/>
+            <a type="button" id="download" style="visibility: hidden">下载地图文件</a>
+        </div>
+    </form>
+    <div style="width:600px;height:400px;border:1px solid gray" id="map"></div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function prepareDownload(data, name) {
+            var text = JSON.stringify(data);
+            var type = 'text/plain';
+            var downbtn = document.getElementById("download");
+            var file = new Blob([text], {type: type});
+            downbtn.href = URL.createObjectURL(file);
+            downbtn.download = name + '.json';
+            downbtn.style.visibility = 'visible';
+        }
+
+        function search() {
+            var initGeojson = {
+                type: "FeatureCollection",
+                features: []
+            };
+            var centerPoint = document.getElementById('center-point').value;
+            var level = parseInt(document.getElementById('level').value) || 11;
+            var areas = document.getElementById('areas').value;
+            areas = areas.split(';');
+            var mapCenter = centerPoint || areas[0];
+
+            if (mapCenter) {
+                var map = new BMap.Map("map", {enableMapClick: false});
+                // 初始化地图,设置中心点坐标和地图级别
+                map.centerAndZoom(mapCenter, level);
+                var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+                var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+                map.addControl(top_left_control)
+                map.addControl(top_left_navigation)
+            }
+
+            //获取行政区域的边界
+            var bdary = new BMap.Boundary();
+
+            function generate(array, callback) {
+                // 递归获取boundary数据
+                var value = array.pop(0);
+                if (value === undefined) {
+                    // 递归结束
+                    callback(initGeojson, mapCenter);
+                    return
+                }
+                bdary.get(value, function (rs) { //获取行政区域
+                    var count = rs.boundaries.length; //有多少个地理区间
+                    var pgType = 'Polygon';
+                    if (count > 1) {
+                        pgType = 'MultiPolygon';
+                    }
+                    var pgs = {
+                        type: 'Feature',
+                        properties: {
+                            name: value
+                        },
+                        geometry: {
+                            type: pgType,
+                            coordinates: []
+                        }
+                    };
+                    for (var i = 0; i < count; i++) {
+                        var bds = rs.boundaries[i];
+                        //建立多边形覆盖物
+                        var polygon = new BMap.Polygon(bds, {
+                            strokeWeight: 2,
+                            strokeOpacity: 1,
+                            StrokeStyle: "solid",
+                            strokeColor: "#9730f7",
+                            fillOpacity: 0.01
+                        });
+                        map.addOverlay(polygon); //添加覆盖物
+                        //填充pg
+                        var bdsArray = bds.split(';');
+                        var line = [];
+                        $.each(bdsArray, function (idx, point) {
+                            var p = point.split(',');
+                            var x = $.trim(p[0]), y = $.trim(p[1]);
+                            line.push([x, y])
+                        });
+                        var pg = [line];
+                        if (pgType === 'MultiPolygon') {
+                            pgs.geometry.coordinates.push(pg)
+                        } else {
+                            pgs.geometry.coordinates = pg
+                        }
+                    }
+                    initGeojson.features.push(pgs);
+                    generate(array, callback);
+                });
+            }
+
+            generate(areas, prepareDownload);
+        }
+
+        $('#search').on('click', function(){
+            search();
+        })
+    })
+</script>
+</html>
