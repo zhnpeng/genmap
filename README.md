@@ -3,7 +3,7 @@
 
 ## 使用方法：
 <ol>
-<li>把genmap.html里边http://api.map.baidu.com/api?v=1.5&ak=your_baidu_ak的your_baidu_ak替换成你的baidu api key
+<li>把genmap.html里边的your_baidu_ak替换成你的baidu api key
 <a href="http://lbsyun.baidu.com/apiconsole/key">百度AK申请</a>
 </li>
 <li>双击genmap/genmap.html，在浏览器中打开</li>
@@ -18,7 +18,7 @@
 </ol>
 
 ## 效果图
-(https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
+[!image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
 
 ## 输出文件格式
 {% highlight json %}
