@@ -17,6 +17,8 @@
 <li>点击下载地图文件，下载地图XXX.json</li>
 </ol>
 
+<a href="http://sandbox.runjs.cn/show/z76tl47t">Demo</a>
+
 ## 效果图
 ![image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
 
