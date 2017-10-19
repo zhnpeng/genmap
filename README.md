@@ -20,8 +20,8 @@
 ## 效果图
 ![image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
 
-## 输出文件格式
-{% highlight json %}
+## 输出文件样例
+``` json
 {
   "type": "FeatureCollection",
   "features": [
@@ -48,4 +48,4 @@
     }
   ]
 }
-{% endhighlight %}
+```
