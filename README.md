@@ -18,7 +18,7 @@
 </ol>
 
 ## 效果图
-(https://github.com/layjump/genmap/blob/master/screenshots/1508229208680.jpg)
+(https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
 
 ## 输出文件格式
 {% highlight json %}
