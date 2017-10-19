@@ -17,4 +17,35 @@
 <li>点击下载地图文件，下载地图XXX.json</li>
 </ol>
 
-## 输出文件
+## 效果图
+(https://github.com/layjump/genmap/blob/master/screenshots/1508229208680.jpg)
+
+## 输出文件格式
+{% highlight json %}
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "上海"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              "122.029708",
+              "31.144107"
+            ],
+            [
+              "121.993529",
+              "31.048415"
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+{% endhighlight %}
