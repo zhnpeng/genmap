@@ -3,8 +3,8 @@
 
 ## 使用方法：
 <ol>
-<li>把genmap.html里边的your_baidu_ak替换成你的baidu api key
-<a href="http://lbsyun.baidu.com/apiconsole/key">百度AK申请</a>
+<li><strong>把genmap.html里边的your_baidu_ak替换成你的baidu api key
+<a href="http://lbsyun.baidu.com/apiconsole/key">百度AK申请</a></strong>
 </li>
 <li>双击genmap/genmap.html，在浏览器中打开</li>
 <li>在浏览器中输入地图中心点</li>
@@ -16,8 +16,6 @@
 </li>
 <li>点击下载地图文件，下载地图XXX.json</li>
 </ol>
-
-<strong>使用前先把genmap.html的your_baidu_api_key替换成你的AK，<a href="http://lbsyun.baidu.com/apiconsole/key">AK申请</a></strong>
 
 ## 效果图
 ![image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
