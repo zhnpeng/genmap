@@ -3,34 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=your_baidu_ak"></script>
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
 	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=3EARQaGsvqjlOo3CAyjMOZVcrmNmao77"></script>
+    <script src="assets/select2.min.js"></script>
+    <link href="assets/select2.min.css" rel="stylesheet" />
+    <link href="assets/bulma.css" rel="stylesheet" />
+    <link href="src/style.css" rel="stylesheet" />
 </head>
-<body style="padding-left: 20px">
-    <h3>自定义地图</h3>
-    <form class="form-horizontal">
-        <div class="control-group">
-            <label>地图中心点（比如：上海市） *</label>
-            <input type="text" id="center-point" />
+<body>
+    <div class="container">
+    <div class="column">
+        <div class="field">
+            <h1>自定义地图</h1>
         </div>
-        <div class="control-group">
-            <label>行政区域列表，用英文分号分隔（比如：上海市;浙江省;江苏省） *</label>
-            <input type="text" id="areas" />
+        <div class="field">
+            <label class="label">预览中心地点</label>
+            <div class="control">
+                <select class="center-point" style="width:450px;">
+                    <option value="上海市">上海市</option>
+                    <option value="浙江省">浙江省</option>
+                </select>
+            </div>
+            <p class="help">单选，可输入；预览地图的中心点（比如：上海市）</p>
         </div>
-        <div class="control-group">
+        <div class="field">
+            <label class="label">行政区域列表 *</label>
+            <div class="control">
+                <select class="areas" multiple="multiple" style="width: 450px">
+                    <option value="上海市">上海市</option>
+                    <option value="浙江省">浙江省</option>
+                </select>
+            </div>
+            <p class="help">多选，可输入；地图组合，区域之间不能覆盖（比如江浙沪：上海市；浙江省；江苏省；</p>
+        </div>
+        <div class="field">
             <label>初始倍率</label>
-            <input type="text" id="level" placeholder="default: 11"/>
+            <div class="control">
+                <select class="level" style="width: 450px">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                </select>
+            </div>
+            <p class="help">预览地图的初始放大倍率，默认：0</p>
         </div>
-        <div class="control-group">
-            <input type="button" id="search" value="生成地图并预览"/>
-            <a type="button" id="download" style="visibility: hidden">下载地图文件</a>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" id="search">生成地图文件并预览</button>
+            </div>
+            <div class="control">
+                <a class="is-link" id="download" style="visibility: hidden">下载地图文件</a>
+            </div>
         </div>
-    </form>
-    <div style="width:600px;height:400px;border:1px solid gray" id="map"></div>
+        <div class="field">
+            <div style="height:500px;border:1px solid gray" id="map"></div>
+        </div>
+    </div>
+    </div>
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
+        var centerPoint = $(".center-point").select2({
+            tags: true
+        });
+        var areas = $(".areas").select2({
+            tags: true
+        });
         function prepareDownload(data, name) {
             var text = JSON.stringify(data);
             var type = 'text/plain';
@@ -46,11 +101,10 @@
                 type: "FeatureCollection",
                 features: []
             };
-            var centerPoint = document.getElementById('center-point').value;
-            var level = parseInt(document.getElementById('level').value) || 11;
-            var areas = document.getElementById('areas').value;
-            areas = areas.split(';');
-            var mapCenter = centerPoint || areas[0];
+
+            var level = parseInt($(".level").val());
+            var areasSelected = $(".areas").val();
+            var mapCenter = $(".center-point").val() || areasSelected[0];
 
             if (mapCenter) {
                 var map = new BMap.Map("map", {enableMapClick: false});
@@ -120,7 +174,7 @@
                 });
             }
 
-            generate(areas, prepareDownload);
+            generate(areasSelected, prepareDownload);
         }
 
         $('#search').on('click', function(){
