@@ -17,7 +17,7 @@
 <li>点击下载地图文件，下载地图XXX.json</li>
 </ol>
 
-<strong><a href="http://sandbox.runjs.cn/show/z76tl47t">Demo</a></strong>
+<strong>使用前先把genmap.html的your_baidu_api_key替换成你的AK，<a href="http://lbsyun.baidu.com/apiconsole/key">AK申请</a></strong>
 
 ## 效果图
 ![image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
