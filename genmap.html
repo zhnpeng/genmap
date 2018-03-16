@@ -10,12 +10,19 @@
     <link href="assets/bulma.css" rel="stylesheet" />
     <link href="src/style.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background: -webkit-linear-gradient(left, #ffecbc, white); background: -moz-linear-gradient(left, #ffecbc, white);">
     <div class="container">
-    <div class="column">
-        <div class="field">
-            <h1>自定义地图</h1>
-        </div>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                <h1 class="title">自定义地图</h1>
+                <h2 class="subtitle">
+                    自定义组合多个行政区域地图，预览并且生成geojson格式文件，可用于可视化开发库（比如<a href="http://http://echarts.baidu.com/">Echarts</a>）的地图控件中。
+                </h2>
+                </div>
+            </div>
+        </section>
+        <section>
         <div class="field">
             <label class="label">预览中心地点</label>
             <div class="control">
@@ -34,7 +41,8 @@
                     <option value="浙江省">浙江省</option>
                 </select>
             </div>
-            <p class="help">多选，可输入；地图组合，区域之间不能覆盖（比如江浙沪：上海市；浙江省；江苏省；</p>
+            <p class="help">多选，可输入；区域之间不能覆盖（比如选：静安区;南京市;福建省;）</p>
+            <p class="help">行政区域最小颗粒度和<a href="http://map.baidu.com">百度地图</a>一致</p>
         </div>
         <div class="field">
             <label>初始倍率</label>
@@ -62,7 +70,7 @@
                     <option value="19">19</option>
                 </select>
             </div>
-            <p class="help">预览地图的初始放大倍率，默认：0</p>
+            <p class="help">预览地图的初始放大倍率</p>
         </div>
         <div class="field is-grouped">
             <div class="control">
@@ -75,7 +83,7 @@
         <div class="field">
             <div style="height:500px;border:1px solid gray" id="map"></div>
         </div>
-    </div>
+        </section>
     </div>
 </body>
 <script type="text/javascript">
