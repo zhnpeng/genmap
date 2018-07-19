@@ -18,7 +18,7 @@
 </ol>
 
 ## 效果图
-![image](https://github.com/layjump/genmap/raw/master/screenshots/1508229208680.jpg)
+![image](https://github.com/layjump/genmap/raw/master/screenshots/screenshot.gif)
 
 ## 输出文件样例
 ``` json
